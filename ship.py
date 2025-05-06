@@ -27,8 +27,12 @@ class Ship(Sprite):
     self.firing = False
     self.frames = 0
     
-    # Fire rate limiting
-    self.fire_cooldown = 15  # Frames between shots
+    # Fire rate limiting - get from settings if available
+    if hasattr(self.settings, 'ship_fire_rate'):
+      self.fire_cooldown = self.settings.ship_fire_rate
+    else:
+      self.fire_cooldown = 25  # Default fire rate (higher = slower)
+      
     self.cooldown_timer = 0  # Current cooldown timer
     
     self.exploding_timer = Timer(image_list=Ship.exploding_images, delay=200, is_loop=False)
@@ -70,6 +74,10 @@ class Ship(Sprite):
     self.center.y = min(max(y, rh/2), srb - rh/2)
 
   def update(self):
+    # Update fire rate from settings if they've changed
+    if hasattr(self.settings, 'ship_fire_rate'):
+      self.fire_cooldown = self.settings.ship_fire_rate
+      
     if self.dying and self.timer.is_expired():
       self.die()
     self.center += self.v * self.settings.ship_speed_factor
@@ -80,10 +88,14 @@ class Ship(Sprite):
     if self.cooldown_timer > 0:
       self.cooldown_timer -= 1
     
-    # Control firing rate - completely ignore the % 10 check which caused rate issues
+    # Control firing rate - requires cooldown to be done
     if self.firing and self.cooldown_timer <= 0:
       self.lasers.fire()
       self.cooldown_timer = self.fire_cooldown
+      
+      # Track shots fired for difficulty adjustment
+      if hasattr(self.game, 'difficulty_manager'):
+        self.game.difficulty_manager.shot_fired()
       
     self.frames += 1
 

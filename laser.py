@@ -28,17 +28,24 @@ class Lasers:
         snd.play_fire_phaser() if type(self.owner) is alien.AlienFleet else snd.play_fire_photon()
 
     def update(self):
+        # Skip update if restart is already needed
+        if hasattr(self.game, 'need_restart') and self.game.need_restart:
+            return
+
         for laser in self.lasers.copy():
             if laser.rect.bottom <= 0 or laser.rect.top >= self.game.screen.get_rect().bottom: 
                 self.lasers.remove(laser)
 
         collisions = pg.sprite.groupcollide(self.alien_fleet.fleet, self.lasers, False, True)
         for alien in collisions: 
-          if not alien.dying: alien.hit()
+            if not alien.dying: alien.hit()
 
-        if self.alien_fleet.length() == 0:  
+        # Check if all aliens are defeated and we haven't already set restart flag
+        if self.alien_fleet.length() == 0 and not getattr(self.game, 'need_restart', False):  
             self.stats.level_up()
-            self.game.restart()
+            # Set the flag to restart only if it's not already set
+            self.game.need_restart = True
+            return  # Early return to break the update chain
             
         for laser in self.lasers:
             laser.update()
