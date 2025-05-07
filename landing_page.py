@@ -36,7 +36,7 @@ class LandingPage:
         font = pg.font.SysFont(None, 48)
 
         strings = [('SPACE', WHITE, headingFont), ('INVADERS', GREEN, subheadingFont),
-                ('= 10 PTS', GREY, font), ('= 20 PTS', GREY, font),
+                ('= 20 PTS', GREY, font), ('= 40 PTS', GREY, font),
                             ('= 40 PTS', GREY, font), ('= ???', GREY, font),
                # ('PLAY GAME', GREEN, font), 
                 (f'HIGH SCORE = {self.highscore:,}', GREY, font)]
