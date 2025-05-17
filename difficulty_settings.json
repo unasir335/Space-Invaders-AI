@@ -1,1 +1,1 @@
-{"difficulty": 2, "avg_score": 1480, "win_rate": 0.9, "hit_rate": 0.2145214521452145, "alien_rows": 2, "alien_cols": 4, "fleet_drop_speed": 0.4, "alien_speed": 0.4, "boss_spawn_threshold": 30, "boss_speed": 0.5, "boss_fire_rate": 70, "ship_lives": 3, "boss_count": 1, "ship_fire_rate": 10}
+{"difficulty": 2, "avg_score": 1120, "win_rate": 0.9, "hit_rate": 0.24489795918367346, "alien_rows": 2, "alien_cols": 4, "fleet_drop_speed": 0.4, "alien_speed": 0.4, "boss_spawn_threshold": 30, "boss_speed": 0.5, "boss_fire_rate": 70, "ship_lives": 3, "boss_count": 1, "ship_fire_rate": 10}
